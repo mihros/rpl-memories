@@ -12,15 +12,110 @@ const quotes = [
   "Teman datang dan pergi, kenangan tetap abadi.",
 ]
 
-export default function Home() {
+// DATA SISWA
+const students = [
+  {
+    name: "Alfiana Nur Sadevi",
+    image: "/images/student-01.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Bagas Fawaz Wahyudi",
+    image: "/images/student-02.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Bunga Aulia Agustina",
+    image: "/images/student-03.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Elsya Syahrani Aulia Putri",
+    image: "/images/student-04.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Indriani",
+    image: "/images/student-05.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Mochammad Zulfa Al Audy",
+    image: "/images/student-06.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Muhamad Mihros Qolbi A",
+    image: "/images/student-07.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Muhamad Raffi Ramadhan",
+    image: "/images/student-08.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Nabila Galuh Candra Kirana",
+    image: "/images/student-09.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Nita Nur Fadilah",
+    image: "/images/student-10.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Novida Zahra Aulia",
+    image: "/images/student-11.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Nur Habib Ramadhan",
+    image: "/images/student-12.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Nur Laily Rahma Dhini",
+    image: "/images/student-13.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Nurul Izzah Lailatul Maghfiroh",
+    image: "/images/student-14.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Putri Amelia",
+    image: "/images/student-15.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Raditya Surya Lesmana",
+    image: "/images/student-16.jpeg",
+    quote: "Tetap semangat mengejar mimpi.",
+  },
+  {
+    name: "Retika Putri Megasari",
+    image: "/images/student-17.jpeg",
+    quote: "Persahabatan tidak akan terlupakan.",
+  },
+  {
+    name: "Rival Nanda Dianysah",
+    image: "/images/student-18.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+  {
+    name: "Zahrakirana Budi Febriyanti",
+    image: "/images/student-19.jpeg",
+    quote: "Kenangan sekolah selamanya indah.",
+  },
+]
 
-  // RANDOM QUOTE
+export default function Home() {
   const [randomQuote, setRandomQuote] = useState("")
 
   useEffect(() => {
-    const random =
-      quotes[Math.floor(Math.random() * quotes.length)]
-
+    const random = quotes[Math.floor(Math.random() * quotes.length)]
     setRandomQuote(random)
   }, [])
 
@@ -32,7 +127,6 @@ export default function Home() {
       {/* HERO */}
       <section className="h-screen relative flex items-center justify-center overflow-hidden">
 
-        {/* VIDEO BACKGROUND */}
         <video
           autoPlay
           muted
@@ -42,7 +136,6 @@ export default function Home() {
           <source src="/videos/school.mp4" type="video/mp4" />
         </video>
 
-        {/* CONTENT */}
         <div className="relative z-10 text-center px-4">
 
           <motion.h1
@@ -63,7 +156,6 @@ export default function Home() {
             Bersama dalam cerita, selamanya dalam kenangan.
           </motion.p>
 
-          {/* QUOTE */}
           <p className="text-zinc-500 italic mt-8">
             "{randomQuote}"
           </p>
@@ -73,120 +165,111 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section
-        id="about"
-        className="py-32 bg-zinc-900/70 backdrop-blur-md text-center px-4"
-      >
+      <section className="py-32 bg-zinc-900/70 text-center px-4">
 
-        <motion.h2
-          whileInView={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-bold mb-8"
-        >
-          Tentang Angkatan
-        </motion.h2>
+        <h2 className="text-5xl font-bold mb-8">
+          Tentang Kelas
+        </h2>
 
-        <p className="max-w-3xl mx-auto text-zinc-400 leading-8 text-lg">
-          Website ini dibuat untuk menyimpan seluruh
-          kenangan indah selama masa sekolah bersama
-          teman-teman terbaik.
+        <p className="max-w-3xl mx-auto text-zinc-400 text-lg">
+          Website ini dibuat untuk menyimpan seluruh kenangan indah selama masa sekolah.
         </p>
 
       </section>
 
-      {/* GALLERY */}
-      <section
-        id="gallery"
-        className="py-32 px-4"
-      >
+      {/* STUDENTS */}
+      <section className="py-32 px-4">
 
-        <motion.h2
-          whileInView={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-bold text-center mb-16"
-        >
-          Gallery Kenangan
-        </motion.h2>
+        <h2 className="text-5xl font-bold text-center mb-16">
+          Daftar Siswa
+        </h2>
 
+        {/* IMPORTANT: PhotoProvider juga membungkus siswa */}
         <PhotoProvider>
+          <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {students.map((student, index) => (
+              <div
+                key={index}
+                className="bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition duration-300"
+              >
 
-            <PhotoView src="/images/kelas-1.jpg">
-              <img
-                src="/images/kelas-1.jpg"
-                alt="Gallery 1"
-                className="rounded-3xl h-80 w-full object-cover hover:scale-105 hover:brightness-110 transition duration-500 cursor-pointer"
-              />
-            </PhotoView>
+                <PhotoView src={student.image}>
+                  <img
+                    src={student.image}
+                    alt={student.name}
+                    className="h-64 w-full object-cover cursor-pointer"
+                  />
+                </PhotoView>
 
-            <PhotoView src="/images/kelas-2.jpg">
-              <img
-                src="/images/kelas-2.jpg"
-                alt="Gallery 2"
-                className="rounded-3xl h-80 w-full object-cover hover:scale-105 hover:brightness-110 transition duration-500 cursor-pointer"
-              />
-            </PhotoView>
+                <div className="p-4 text-center">
+                  <h3 className="font-bold text-lg">
+                    {student.name}
+                  </h3>
+                  <p className="text-zinc-400 text-sm mt-2 italic">
+                    "{student.quote}"
+                  </p>
+                </div>
 
-            <PhotoView src="/images/kelas-3.jpg">
-              <img
-                src="/images/kelas-3.jpg"
-                alt="Gallery 3"
-                className="rounded-3xl h-80 w-full object-cover hover:scale-105 hover:brightness-110 transition duration-500 cursor-pointer"
-              />
-            </PhotoView>
+              </div>
+            ))}
 
           </div>
+        </PhotoProvider>
 
+      </section>
+
+      {/* GALLERY */}
+      <section className="py-32 px-4">
+
+        <h2 className="text-5xl font-bold text-center mb-16">
+          Gallery Kenangan
+        </h2>
+
+        <PhotoProvider>
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+            {[1, 2, 3].map((i) => (
+              <PhotoView key={i} src={`/images/kelas-${i}.jpg`}>
+                <img
+                  src={`/images/kelas-${i}.jpg`}
+                  className="rounded-3xl h-80 w-full object-cover hover:scale-105 transition cursor-pointer"
+                />
+              </PhotoView>
+            ))}
+
+          </div>
         </PhotoProvider>
 
       </section>
 
       {/* TIMELINE */}
-      <section
-        id="timeline"
-        className="py-32 bg-zinc-900/70 backdrop-blur-md px-4"
-      >
+      <section className="py-32 bg-zinc-900/70 px-4">
 
-        <motion.h2
-          whileInView={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-bold text-center mb-16"
-        >
+        <h2 className="text-5xl font-bold text-center mb-16">
           Timeline Sekolah
-        </motion.h2>
+        </h2>
 
-        <div className="max-w-3xl mx-auto space-y-10">
+        <div className="max-w-3xl mx-auto space-y-10 text-zinc-300">
 
-          <div className="border-l-4 border-white pl-6">
+          <div className="border-l-4 pl-6">
             <h3 className="text-2xl font-bold">2021</h3>
-            <p className="text-zinc-400">
-              Awal masuk sekolah dan bertemu teman baru.
-            </p>
+            <p>Awal masuk sekolah.</p>
           </div>
 
-          <div className="border-l-4 border-white pl-6">
+          <div className="border-l-4 pl-6">
             <h3 className="text-2xl font-bold">2022</h3>
-            <p className="text-zinc-400">
-              Study tour dan class meeting terbaik.
-            </p>
+            <p>Mulai banyak kenangan bersama.</p>
           </div>
 
-          <div className="border-l-4 border-white pl-6">
+          <div className="border-l-4 pl-6">
             <h3 className="text-2xl font-bold">2023</h3>
-            <p className="text-zinc-400">
-              Persahabatan semakin erat.
-            </p>
+            <p>Persahabatan semakin erat.</p>
           </div>
 
-          <div className="border-l-4 border-white pl-6">
+          <div className="border-l-4 pl-6">
             <h3 className="text-2xl font-bold">2024</h3>
-            <p className="text-zinc-400">
-              Kelulusan dan perpisahan penuh kenangan.
-            </p>
+            <p>Kelulusan penuh kenangan.</p>
           </div>
 
         </div>
@@ -197,19 +280,6 @@ export default function Home() {
       <footer className="py-10 text-center text-zinc-500">
         © 2025 Kenangan Sekolah
       </footer>
-
-      {/* BACK TO TOP */}
-      <button
-        onClick={() =>
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          })
-        }
-        className="fixed bottom-6 right-6 bg-white text-black w-12 h-12 rounded-full shadow-lg hover:scale-110 transition"
-      >
-        ↑
-      </button>
 
     </main>
   )
