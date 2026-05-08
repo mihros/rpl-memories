@@ -450,14 +450,14 @@ export default function Home() {
                 {
                   icon: "👨‍🏫",
                   title: "Wali Kelas",
-                  value: "Jepat",
+                  value: "Jakfad Sodik",
                   sub: "Pembimbing & motivator terbaik",
                 },
                 {
                   icon: "📍",
                   title: "Lokasi",
-                  value: "az",
-                  sub: "Kota, Provinsi",
+                  value: "Al-Azhar",
+                  sub: "Gresik, Jawa Timur",
                 },
                 {
                   icon: "🎓",
