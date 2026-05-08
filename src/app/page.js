@@ -289,7 +289,15 @@ export default function Home() {
               className="text-base md:text-lg italic"
               style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
             >
-              "{randomQuote}"
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="text-base md:text-lg italic"
+                style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
+              >
+                &ldquo;{randomQuote}&rdquo;
+              </motion.p>
             </motion.p>
           </div>
 
@@ -320,7 +328,7 @@ export default function Home() {
           <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
           <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.2), transparent)" }} />
         </div>
-{/* TENTANG KELAS */}
+        {/* TENTANG KELAS */}
         <section className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
@@ -448,7 +456,7 @@ export default function Home() {
                 {
                   icon: "📍",
                   title: "Lokasi",
-                  value: "Nama Sekolah",
+                  value: "az",
                   sub: "Kota, Provinsi",
                 },
                 {
@@ -564,7 +572,12 @@ export default function Home() {
                     </h3>
                     <p className="text-xs italic leading-relaxed"
                       style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}>
-                      "{student.quote}"
+                      <p
+                        className="text-xs italic leading-relaxed"
+                        style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
+                      >
+                        &ldquo;{student.quote}&rdquo;
+                      </p>
                     </p>
                   </div>
                 </motion.div>
@@ -694,7 +707,7 @@ export default function Home() {
           </PhotoProvider>
         </section>
 
-                {/* TIMELINE */}
+        {/* TIMELINE */}
         <section className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
