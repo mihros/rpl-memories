@@ -34,7 +34,7 @@ const students = [
   { name: "Zahrakirana Budi Febriyanti", image: "/images/student-19.jpeg", ig: "zahrakirana.b", quote: "Terus melangkah meski pelan." },
 ]
 
-const gallery = Array.from({ length: 36 }, (_, i) => ({
+const gallery = Array.from({ length: 37 }, (_, i) => ({
   src: `/images/kelas-${i + 1}.jpeg`,
 }))
 
