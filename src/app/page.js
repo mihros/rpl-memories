@@ -38,6 +38,88 @@ const gallery = Array.from({ length: 62 }, (_, i) => ({
   src: `/images/kelas-${i + 1}.jpeg`,
 }))
 
+// ratio: "16/9" landscape | "9/16" portrait | "1/1" square
+// sesuaikan dengan orientasi video aslimu
+const videoList = [
+  { src: "/videos/001.mp4",  title: "Tiga Tahun Bersama",    tag: "Film Pendek", duration: "3:24", ratio: "16/9" },
+  { src: "/videos/00012.mp4",  title: "Hari Pertama",           tag: "MPLS",        duration: "1:12", ratio: "9/16" },
+  { src: "/videos/00013.mp4",  title: "Terjun ke Dunia Kerja", tag: "PKL",         duration: "2:05", ratio: "9/16" },
+  { src: "/videos/00015.mp4",  title: "Saat Deadline",          tag: "Kelas",       duration: "0:45", ratio: "1/1"  },
+  { src: "/videos/00016.mp4",  title: "Pensi & Perpisahan",     tag: "Acara",       duration: "1:30", ratio: "16/9" },
+  { src: "/videos/kicau.mp4",  title: "Hari Wisuda",            tag: "Kelulusan",   duration: "2:48", ratio: "9/16" },
+  { src: "/videos/wer.mp4",  title: "Olahraga Bareng",        tag: "Kegiatan",    duration: "1:05", ratio: "1/1"  },
+  { src: "/videos/lands.mp4",  title: "Study Tour",             tag: "Perjalanan",  duration: "2:20", ratio: "16/9" },
+  { src: "/videos/wer.mp4",  title: "Projek Akhir",           tag: "Akademik",    duration: "1:55", ratio: "9/16" },
+  { src: "/videos/wer.mp4", title: "Momen Terakhir Bersama", tag: "Kenangan",    duration: "3:10", ratio: "1/1"  },
+]
+
+// ─── VideoCard Component ───────────────────────────────────────────
+function VideoCard({ src, title, tag, duration, ratio = "16/9" }) {
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        borderRadius: "18px",
+        background: "#111",
+        border: "1px solid rgba(255,255,255,0.05)",
+        aspectRatio: ratio,
+        width: "100%",
+      }}
+    >
+      {/* Video autoplay langsung */}
+      <video
+        src={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {/* Gradient overlay bawah */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)",
+        zIndex: 2,
+      }} />
+
+      {/* Duration badge */}
+      <span className="absolute" style={{
+        top: "12px", right: "12px", zIndex: 3,
+        fontSize: "10px", fontFamily: "monospace",
+        color: "rgba(255,255,255,0.6)",
+        background: "rgba(0,0,0,0.55)",
+        border: "1px solid rgba(255,255,255,0.1)",
+        padding: "3px 7px", borderRadius: "4px",
+      }}>
+        {duration}
+      </span>
+
+      {/* Meta */}
+      <div className="absolute bottom-0 left-0 right-0" style={{ padding: "14px", zIndex: 3 }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: "5px",
+          fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase",
+          color: "rgba(180,140,60,0.8)", background: "rgba(180,140,60,0.1)",
+          border: "1px solid rgba(180,140,60,0.2)", borderRadius: "3px",
+          padding: "3px 8px", marginBottom: "6px", fontFamily: "Georgia, serif",
+        }}>
+          <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#c9a84c", display: "inline-block" }} />
+          {tag}
+        </div>
+        <div style={{
+          fontFamily: "'Playfair Display', 'Times New Roman', serif",
+          fontWeight: 700, color: "#f0e8d5",
+          fontSize: "13px", lineHeight: 1.3,
+        }}>
+          {title}
+        </div>
+      </div>
+    </div>
+  )
+}
+// ──────────────────────────────────────────────────────────────────
+
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true)
   const [isOpening, setIsOpening] = useState(false)
@@ -59,7 +141,7 @@ export default function Home() {
     setContentFade(true)
     if (audioRef.current) {
       audioRef.current.volume = 0
-      audioRef.current.play().catch(() => { })
+      audioRef.current.play().catch(() => {})
       setIsPlaying(true)
       let vol = 0
       const fadeIn = setInterval(() => {
@@ -83,7 +165,7 @@ export default function Home() {
       try {
         await audio.play()
         setIsPlaying(true)
-      } catch (e) { }
+      } catch (e) {}
     }
   }
 
@@ -98,9 +180,7 @@ export default function Home() {
         onClick={toggleMusic}
         className="fixed bottom-6 right-6 z-[9998] w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300"
         style={{
-          background: isPlaying
-            ? "linear-gradient(135deg, #c9a84c, #e8c97a)"
-            : "rgba(255,255,255,0.08)",
+          background: isPlaying ? "linear-gradient(135deg, #c9a84c, #e8c97a)" : "rgba(255,255,255,0.08)",
           border: isPlaying ? "none" : "1px solid rgba(255,255,255,0.15)",
           backdropFilter: "blur(12px)",
           boxShadow: isPlaying ? "0 0 24px rgba(180,140,60,0.5)" : "none",
@@ -113,10 +193,7 @@ export default function Home() {
 
       {/* INTRO SCREEN */}
       {showIntro && (
-        <div
-          className="fixed inset-0 z-[9999] overflow-hidden"
-          style={{ pointerEvents: isOpening ? "none" : "auto" }}
-        >
+        <div className="fixed inset-0 z-[9999] overflow-hidden" style={{ pointerEvents: isOpening ? "none" : "auto" }}>
           <div
             className="absolute inset-0 flex flex-col items-center justify-center transition-transform"
             style={{
@@ -126,42 +203,25 @@ export default function Home() {
               transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
             }}
           >
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(90deg, rgba(180,140,60,0.035) 0px, rgba(180,140,60,0.035) 1px, transparent 1px, transparent 48px)",
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(180,140,60,0.07) 0%, transparent 70%)",
-              }}
-            />
-            <div className="absolute top-0 left-0 right-0 h-[1px]"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.4), transparent)" }} />
-            <div className="absolute bottom-0 left-0 right-0 h-[1px]"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.4), transparent)" }} />
+            <div className="absolute inset-0 pointer-events-none" style={{
+              backgroundImage: "repeating-linear-gradient(90deg, rgba(180,140,60,0.035) 0px, rgba(180,140,60,0.035) 1px, transparent 1px, transparent 48px)",
+            }} />
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(180,140,60,0.07) 0%, transparent 70%)",
+            }} />
+            <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.4), transparent)" }} />
+            <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.4), transparent)" }} />
 
-            <div
-              className="relative z-10 text-center px-6 transition-opacity duration-400"
-              style={{ opacity: contentFade ? 0 : 1 }}
-            >
+            <div className="relative z-10 text-center px-6 transition-opacity duration-400" style={{ opacity: contentFade ? 0 : 1 }}>
               <div className="inline-flex items-center gap-3 mb-8">
                 <div className="h-px w-10" style={{ background: "rgba(180,140,60,0.4)" }} />
-                <p
-                  className="text-[10px] tracking-[0.45em] uppercase"
-                  style={{ fontFamily: "Georgia, serif", color: "rgba(180,140,60,0.65)" }}
-                >
+                <p className="text-[10px] tracking-[0.45em] uppercase" style={{ fontFamily: "Georgia, serif", color: "rgba(180,140,60,0.65)" }}>
                   RPL · 2023 / 2026
                 </p>
                 <div className="h-px w-10" style={{ background: "rgba(180,140,60,0.4)" }} />
               </div>
 
-              <div className="mb-5" style={{ color: "rgba(180,140,60,0.4)", letterSpacing: "0.6em", fontSize: "13px" }}>
-                ✦ ✦ ✦
-              </div>
+              <div className="mb-5" style={{ color: "rgba(180,140,60,0.4)", letterSpacing: "0.6em", fontSize: "13px" }}>✦ ✦ ✦</div>
 
               <h1
                 className="font-bold leading-[1.05] mb-4"
@@ -173,22 +233,15 @@ export default function Home() {
                   letterSpacing: "-0.02em",
                 }}
               >
-                Kenangan
-                <br />
+                Kenangan<br />
                 <span style={{ color: "#c9a84c" }}>Sekolah</span>
               </h1>
 
-              <p
-                className="mb-12"
-                style={{
-                  fontFamily: "Georgia, serif",
-                  fontStyle: "italic",
-                  fontSize: "clamp(14px, 2.5vw, 18px)",
-                  color: "rgba(200,175,110,0.6)",
-                  fontWeight: 400,
-                  letterSpacing: "0.03em",
-                }}
-              >
+              <p className="mb-12" style={{
+                fontFamily: "Georgia, serif", fontStyle: "italic",
+                fontSize: "clamp(14px, 2.5vw, 18px)", color: "rgba(200,175,110,0.6)",
+                fontWeight: 400, letterSpacing: "0.03em",
+              }}>
                 Satu bab berakhir, seribu kenangan tersimpan
               </p>
 
@@ -196,16 +249,10 @@ export default function Home() {
                 onClick={handleOpen}
                 className="group relative overflow-hidden transition-all duration-300"
                 style={{
-                  fontFamily: "Georgia, serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase",
-                  color: "#0a0a0a",
+                  fontFamily: "Georgia, serif", fontSize: "11px", letterSpacing: "0.3em",
+                  textTransform: "uppercase", color: "#0a0a0a",
                   background: "linear-gradient(135deg, #b8973e, #e8c97a, #b8973e)",
-                  border: "none",
-                  padding: "14px 48px",
-                  borderRadius: "1px",
-                  cursor: "pointer",
+                  border: "none", padding: "14px 48px", borderRadius: "1px", cursor: "pointer",
                 }}
                 onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
                 onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
@@ -218,95 +265,52 @@ export default function Home() {
       )}
 
       {/* HALAMAN UTAMA */}
-      <main
-        className="text-white overflow-x-hidden"
-        style={{ background: "linear-gradient(180deg, #080808 0%, #0f0f0f 30%, #0a0a0a 100%)" }}
-      >
+      <main className="text-white overflow-x-hidden" style={{ background: "linear-gradient(180deg, #080808 0%, #0f0f0f 30%, #0a0a0a 100%)" }}>
         <Navbar />
 
         {/* HERO */}
         <section className="h-screen relative flex items-center justify-center overflow-hidden">
-          <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover"
-            style={{ opacity: 0.3 }}>
+          <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover" style={{ opacity: 0.3 }}>
             <source src="/videos/school.mp4" type="video/mp4" />
           </video>
-
-          <div className="absolute inset-0"
-            style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.1) 50%, rgba(8,8,8,0.8) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.1) 50%, rgba(8,8,8,0.8) 100%)" }} />
 
           <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="mb-6"
-            >
-              <span
-                className="text-[10px] tracking-[0.5em] uppercase"
-                style={{ color: "rgba(180,140,60,0.7)", fontStyle: "italic" }}
-              >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-6">
+              <span className="text-[10px] tracking-[0.5em] uppercase" style={{ color: "rgba(180,140,60,0.7)", fontStyle: "italic" }}>
                 ✦ &nbsp; Angkatan 2026 &nbsp; ✦
               </span>
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
               className="font-bold mb-6"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(48px, 10vw, 96px)",
-                lineHeight: 1.05,
-                letterSpacing: "-0.02em",
-                color: "#f0e8d5",
-                textShadow: "0 0 60px rgba(180,140,60,0.15)",
-              }}
+              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(48px, 10vw, 96px)", lineHeight: 1.05, letterSpacing: "-0.02em", color: "#f0e8d5", textShadow: "0 0 60px rgba(180,140,60,0.15)" }}
             >
-              Kenangan
-              <br />
+              Kenangan<br />
               <span style={{ color: "#c9a84c" }}>Sekolah</span>
             </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+            <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.6 }}
               className="mx-auto mb-6 h-px w-24"
               style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.6), transparent)" }}
             />
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}
               className="text-base md:text-lg italic"
               style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
             >
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.8 }}
-              >
-                &ldquo;{randomQuote}&rdquo;
-              </motion.p>
-            </motion.div>
+              &ldquo;{randomQuote}&rdquo;
+            </motion.p>
           </div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
             className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>
-              scroll
-            </span>
+            <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>scroll</span>
             <div className="w-px h-10 overflow-hidden">
               <motion.div
-                animate={{ y: ["-100%", "100%"] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+                animate={{ y: ["-100%", "100%"] }} transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
                 className="w-full h-full"
                 style={{ background: "linear-gradient(to bottom, transparent, rgba(180,140,60,0.5), transparent)" }}
               />
@@ -314,7 +318,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* SECTION DIVIDER */}
+        {/* DIVIDER */}
         <div className="flex items-center justify-center py-4 gap-4">
           <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.2))" }} />
           <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
@@ -324,166 +328,54 @@ export default function Home() {
         {/* TENTANG KELAS */}
         <section id="tentang" className="py-28 px-4">
           <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-              style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
-              Siapa — Kami
-            </p>
-            <h2
-              className="font-bold"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(32px, 6vw, 52px)",
-                color: "#f0e8d5",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Tentang Kelas
-            </h2>
-            <div className="mx-auto mt-4 h-px w-16"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>Siapa — Kami</p>
+            <h2 className="font-bold" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 6vw, 52px)", color: "#f0e8d5", letterSpacing: "-0.01em" }}>Tentang Kelas</h2>
+            <div className="mx-auto mt-4 h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
           </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
               <div className="mb-6">
-                <span
-                  className="text-[10px] tracking-[0.4em] uppercase"
-                  style={{ color: "rgba(180,140,60,0.55)" }}
-                >
-                  RPL · Rekayasa Perangkat Lunak
-                </span>
+                <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "rgba(180,140,60,0.55)" }}>RPL · Rekayasa Perangkat Lunak</span>
               </div>
-
-              <h3
-                className="font-bold mb-5 leading-tight"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(24px, 4vw, 36px)",
-                  color: "#f0e8d5",
-                }}
-              >
-                Kelas yang Lebih dari
-                <br />
+              <h3 className="font-bold mb-5 leading-tight" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 4vw, 36px)", color: "#f0e8d5" }}>
+                Kelas yang Lebih dari<br />
                 <span style={{ color: "#c9a84c" }}>Sekadar Kelas</span>
               </h3>
-
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Georgia, serif" }}
-              >
-                Kami adalah 19 jiwa yang dipertemukan oleh takdir, disatukan oleh kode,
-                dan diikat oleh kenangan. Tiga tahun bukan waktu yang sebentar — ada
-                tawa, air mata, begadang deadline, dan momen yang tak terlupakan.
+              <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Georgia, serif" }}>
+                Kami adalah 19 jiwa yang dipertemukan oleh takdir, disatukan oleh kode, dan diikat oleh kenangan. Tiga tahun bukan waktu yang sebentar — ada tawa, air mata, begadang deadline, dan momen yang tak terlupakan.
               </p>
-
-              <p
-                className="text-sm leading-relaxed"
-                style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Georgia, serif" }}
-              >
-                Dari baris pertama kode hingga proyek akhir, dari MPLS hingga perpisahan —
-                setiap langkah kita tempuh bersama. Inilah cerita kita.
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Georgia, serif" }}>
+                Dari baris pertama kode hingga proyek akhir, dari MPLS hingga perpisahan — setiap langkah kita tempuh bersama. Inilah cerita kita.
               </p>
-
               <div className="grid grid-cols-3 gap-4 mt-10">
-                {[
-                  { number: "19", label: "Siswa" },
-                  { number: "3", label: "Tahun" },
-                  { number: "∞", label: "Kenangan" },
-                ].map((stat, i) => (
-                  <div
-                    key={i}
-                    className="text-center py-4 px-2 rounded-xl"
-                    style={{
-                      background: "linear-gradient(145deg, rgba(180,140,60,0.08), rgba(180,140,60,0.03))",
-                      border: "1px solid rgba(180,140,60,0.12)",
-                    }}
-                  >
-                    <div
-                      className="font-bold mb-1"
-                      style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: "28px",
-                        color: "#c9a84c",
-                      }}
-                    >
-                      {stat.number}
-                    </div>
-                    <div className="text-[10px] tracking-[0.3em] uppercase"
-                      style={{ color: "rgba(255,255,255,0.3)" }}>
-                      {stat.label}
-                    </div>
+                {[{ number: "19", label: "Siswa" }, { number: "3", label: "Tahun" }, { number: "∞", label: "Kenangan" }].map((stat, i) => (
+                  <div key={i} className="text-center py-4 px-2 rounded-xl" style={{ background: "linear-gradient(145deg, rgba(180,140,60,0.08), rgba(180,140,60,0.03))", border: "1px solid rgba(180,140,60,0.12)" }}>
+                    <div className="font-bold mb-1" style={{ fontFamily: "'Playfair Display', serif", fontSize: "28px", color: "#c9a84c" }}>{stat.number}</div>
+                    <div className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>{stat.label}</div>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="flex flex-col gap-4"
-            >
+            <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="flex flex-col gap-4">
               {[
-                {
-                  icon: "🏫",
-                  title: "Jurusan",
-                  value: "Rekayasa Perangkat Lunak (RPL)",
-                  sub: "SMK Negeri / Swasta",
-                },
-                {
-                  icon: "👨‍🏫",
-                  title: "Wali Kelas",
-                  value: "Jakfad Sodik",
-                  sub: "Pembimbing & motivator terbaik",
-                },
-                {
-                  icon: "📍",
-                  title: "Lokasi",
-                  value: "SMK Al-Azhar",
-                  sub: "Gresik, Jawa Timur",
-                },
-                {
-                  icon: "🎓",
-                  title: "Tahun Lulus",
-                  value: "2026",
-                  sub: "Angkatan kebanggaan",
-                },
+                { icon: "🏫", title: "Jurusan", value: "Rekayasa Perangkat Lunak (RPL)", sub: "SMK Negeri / Swasta" },
+                { icon: "👨‍🏫", title: "Wali Kelas", value: "Jakfad Sodik", sub: "Pembimbing & motivator terbaik" },
+                { icon: "📍", title: "Lokasi", value: "SMK Al-Azhar", sub: "Gresik, Jawa Timur" },
+                { icon: "🎓", title: "Tahun Lulus", value: "2026", sub: "Angkatan kebanggaan" },
               ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}
                   className="flex items-center gap-4 p-4 rounded-2xl"
-                  style={{
-                    background: "linear-gradient(145deg, #161616, #111111)",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                  }}
+                  style={{ background: "linear-gradient(145deg, #161616, #111111)", border: "1px solid rgba(255,255,255,0.05)" }}
                 >
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                    style={{ background: "rgba(180,140,60,0.1)", border: "1px solid rgba(180,140,60,0.15)" }}
-                  >
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style={{ background: "rgba(180,140,60,0.1)", border: "1px solid rgba(180,140,60,0.15)" }}>
                     {item.icon}
                   </div>
                   <div>
-                    <div className="text-[9px] tracking-[0.35em] uppercase mb-0.5"
-                      style={{ color: "rgba(180,140,60,0.5)" }}>
-                      {item.title}
-                    </div>
-                    <div className="text-sm font-medium" style={{ color: "#f0e8d5" }}>
-                      {item.value}
-                    </div>
-                    <div className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
-                      {item.sub}
-                    </div>
+                    <div className="text-[9px] tracking-[0.35em] uppercase mb-0.5" style={{ color: "rgba(180,140,60,0.5)" }}>{item.title}</div>
+                    <div className="text-sm font-medium" style={{ color: "#f0e8d5" }}>{item.value}</div>
+                    <div className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>{item.sub}</div>
                   </div>
                 </motion.div>
               ))}
@@ -491,7 +383,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION DIVIDER */}
+        {/* DIVIDER */}
         <div className="flex items-center justify-center py-4 gap-4">
           <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.2))" }} />
           <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
@@ -501,72 +393,28 @@ export default function Home() {
         {/* STUDENTS */}
         <section id="siswa" className="py-28 px-4">
           <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-              style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
-              Wajah — Wajah Terbaik
-            </p>
-            <h2
-              className="font-bold"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(32px, 6vw, 52px)",
-                color: "#f0e8d5",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Daftar Siswa
-            </h2>
-            <div className="mx-auto mt-4 h-px w-16"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>Wajah — Wajah Terbaik</p>
+            <h2 className="font-bold" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 6vw, 52px)", color: "#f0e8d5", letterSpacing: "-0.01em" }}>Daftar Siswa</h2>
+            <div className="mx-auto mt-4 h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
           </div>
 
           <PhotoProvider>
             <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {students.map((student, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
+                <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
                   className="group relative rounded-2xl overflow-hidden cursor-pointer"
-                  style={{
-                    background: "linear-gradient(145deg, #161616, #111111)",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                  }}
+                  style={{ background: "linear-gradient(145deg, #161616, #111111)", border: "1px solid rgba(255,255,255,0.05)" }}
                 >
                   <div className="relative overflow-hidden">
                     <PhotoView src={student.image}>
-                      <img
-                        src={student.image}
-                        alt={student.name}
-                        className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <img src={student.image} alt={student.name} className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </PhotoView>
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }}
-                    />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
                   </div>
-
                   <div className="p-5">
-                    <div className="h-px mb-4"
-                      style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.3), transparent)" }} />
-                    <h3
-                      className="font-semibold text-base mb-2 leading-tight"
-                      style={{ color: "#f0e8d5", fontFamily: "'Playfair Display', serif" }}
-                    >
-                      {student.name}
-                    </h3>
-                    <p
-                      className="text-xs italic leading-relaxed"
-                      style={{
-                        color: "rgba(180,140,60,0.55)",
-                        fontFamily: "Georgia, serif"
-                      }}
-                    >
-                      &ldquo;{student.quote}&rdquo;
-                    </p>
+                    <div className="h-px mb-4" style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.3), transparent)" }} />
+                    <h3 className="font-semibold text-base mb-2 leading-tight" style={{ color: "#f0e8d5", fontFamily: "'Playfair Display', serif" }}>{student.name}</h3>
+                    <p className="text-xs italic leading-relaxed" style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}>&ldquo;{student.quote}&rdquo;</p>
                   </div>
                 </motion.div>
               ))}
@@ -574,7 +422,7 @@ export default function Home() {
           </PhotoProvider>
         </section>
 
-        {/* SECTION DIVIDER */}
+        {/* DIVIDER */}
         <div className="flex items-center justify-center py-4 gap-4">
           <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.2))" }} />
           <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
@@ -584,74 +432,34 @@ export default function Home() {
         {/* GALLERY */}
         <section id="gallery" className="py-28 px-4">
           <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-              style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
-              Momen — Momen Abadi
-            </p>
-            <h2
-              className="font-bold"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(32px, 6vw, 52px)",
-                color: "#f0e8d5",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Gallery Kenangan
-            </h2>
-            <div className="mx-auto mt-4 h-px w-16"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>Momen — Momen Abadi</p>
+            <h2 className="font-bold" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 6vw, 52px)", color: "#f0e8d5", letterSpacing: "-0.01em" }}>Gallery Kenangan</h2>
+            <div className="mx-auto mt-4 h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
           </div>
 
           <PhotoProvider>
             <div className="relative flex items-center justify-center max-w-6xl mx-auto h-[600px]">
-              <button
-                onClick={prev}
-                className="absolute left-0 md:left-4 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{
-                  background: "rgba(180,140,60,0.15)",
-                  border: "1px solid rgba(180,140,60,0.25)",
-                  color: "rgba(180,140,60,0.8)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                ‹
-              </button>
+              <button onClick={prev} className="absolute left-0 md:left-4 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: "rgba(180,140,60,0.15)", border: "1px solid rgba(180,140,60,0.25)", color: "rgba(180,140,60,0.8)", backdropFilter: "blur(8px)" }}>‹</button>
 
               <div className="relative w-full flex items-center justify-center">
                 {gallery.map((item, i) => {
                   const offset = i - current
                   return (
-                    <div
-                      key={i}
-                      className="absolute transition-all duration-700 ease-in-out"
-                      style={{
-                        transform: `translateX(${offset * 240}px) translateY(${offset === 0 ? 0 : 20}px) scale(${offset === 0 ? 1.2 : 0.75}) rotateY(${offset * -18}deg)`,
-                        zIndex: offset === 0 ? 50 : 10,
-                        opacity: Math.abs(offset) > 2 ? 0 : 1,
-                        filter: offset === 0 ? "brightness(1)" : "brightness(0.45) saturate(0.7)",
-                      }}
-                    >
+                    <div key={i} className="absolute transition-all duration-700 ease-in-out" style={{
+                      transform: `translateX(${offset * 240}px) translateY(${offset === 0 ? 0 : 20}px) scale(${offset === 0 ? 1.2 : 0.75}) rotateY(${offset * -18}deg)`,
+                      zIndex: offset === 0 ? 50 : 10,
+                      opacity: Math.abs(offset) > 2 ? 0 : 1,
+                      filter: offset === 0 ? "brightness(1)" : "brightness(0.45) saturate(0.7)",
+                    }}>
                       <PhotoView src={item.src}>
-                        <div
-                          className="cursor-pointer"
-                          style={{
-                            borderRadius: "20px",
-                            overflow: "hidden",
-                            boxShadow: offset === 0
-                              ? "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(180,140,60,0.15)"
-                              : "none",
-                          }}
-                        >
-                          <img
-                            src={item.src}
-                            className="object-cover transition-all duration-500"
-                            style={{
-                              width: offset === 0 ? "480px" : "280px",
-                              height: offset === 0 ? "580px" : "370px",
-                            }}
-                            alt={`gallery-${i}`}
-                          />
+                        <div className="cursor-pointer" style={{
+                          borderRadius: "20px", overflow: "hidden",
+                          boxShadow: offset === 0 ? "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(180,140,60,0.15)" : "none",
+                        }}>
+                          <img src={item.src} className="object-cover transition-all duration-500"
+                            style={{ width: offset === 0 ? "480px" : "280px", height: offset === 0 ? "580px" : "370px" }}
+                            alt={`gallery-${i}`} />
                         </div>
                       </PhotoView>
                     </div>
@@ -659,201 +467,115 @@ export default function Home() {
                 })}
               </div>
 
-              <button
-                onClick={next}
-                className="absolute right-0 md:right-4 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{
-                  background: "rgba(180,140,60,0.15)",
-                  border: "1px solid rgba(180,140,60,0.25)",
-                  color: "rgba(180,140,60,0.8)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                ›
-              </button>
+              <button onClick={next} className="absolute right-0 md:right-4 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: "rgba(180,140,60,0.15)", border: "1px solid rgba(180,140,60,0.25)", color: "rgba(180,140,60,0.8)", backdropFilter: "blur(8px)" }}>›</button>
             </div>
 
             <div className="flex justify-center gap-1.5 mt-10">
               {gallery.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className="transition-all duration-300"
-                  style={{
-                    width: i === current ? "20px" : "6px",
-                    height: "6px",
-                    borderRadius: "3px",
-                    background: i === current ? "#c9a84c" : "rgba(255,255,255,0.15)",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                />
+                <button key={i} onClick={() => setCurrent(i)} className="transition-all duration-300" style={{
+                  width: i === current ? "20px" : "6px", height: "6px", borderRadius: "3px",
+                  background: i === current ? "#c9a84c" : "rgba(255,255,255,0.15)", border: "none", cursor: "pointer",
+                }} />
               ))}
             </div>
           </PhotoProvider>
         </section>
 
+        {/* DIVIDER */}
+        <div className="flex items-center justify-center py-4 gap-4">
+          <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.2))" }} />
+          <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
+          <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.2), transparent)" }} />
+        </div>
+
+        {/* VIDEO MOMENTS */}
+        <section id="video" className="py-28 px-4">
+          <div className="text-center mb-16">
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>Momen — Bergerak</p>
+            <h2 className="font-bold" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 6vw, 52px)", color: "#f0e8d5", letterSpacing: "-0.01em" }}>Video Kenangan</h2>
+            <div className="mx-auto mt-4 h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
+          </div>
+
+          {/* Masonry 3 kolom — video mengikuti ratio aslinya */}
+          <div className="max-w-6xl mx-auto" style={{
+            columns: "3 280px",
+            columnGap: "16px",
+          }}>
+            {videoList.map((video, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                style={{ breakInside: "avoid", marginBottom: "16px" }}
+              >
+                <VideoCard {...video} />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* DIVIDER */}
+        <div className="flex items-center justify-center py-4 gap-4">
+          <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.2))" }} />
+          <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
+          <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.2), transparent)" }} />
+        </div>
+
         {/* TIMELINE */}
         <section id="timeline" className="py-28 px-4">
           <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-              style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
-              Perjalanan — Tiga Tahun
-            </p>
-            <h2
-              className="font-bold"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(32px, 6vw, 52px)",
-                color: "#f0e8d5",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Timeline Kenangan
-            </h2>
-            <div className="mx-auto mt-4 h-px w-16"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>Perjalanan — Tiga Tahun</p>
+            <h2 className="font-bold" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 6vw, 52px)", color: "#f0e8d5", letterSpacing: "-0.01em" }}>Timeline Kenangan</h2>
+            <div className="mx-auto mt-4 h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.5), transparent)" }} />
           </div>
 
           <div className="max-w-3xl mx-auto relative">
-            <div
-              className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px"
-              style={{ background: "linear-gradient(to bottom, transparent, rgba(180,140,60,0.25) 10%, rgba(180,140,60,0.25) 90%, transparent)" }}
-            />
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px"
+              style={{ background: "linear-gradient(to bottom, transparent, rgba(180,140,60,0.25) 10%, rgba(180,140,60,0.25) 90%, transparent)" }} />
 
             {[
-              {
-                year: "2023",
-                semester: "Tahun Pertama",
-                title: "Awal Perjalanan",
-                desc: "MPLS, perkenalan, dan hari-hari canggung yang menjadi awal dari persahabatan terbaik. Kita mulai mengenal satu sama lain dan belajar bersama untuk pertama kali.",
-                side: "left",
-                emoji: "🌱",
-              },
-              {
-                year: "2023",
-                semester: "Semester 1",
-                title: "Belajar Keras",
-                desc: "Mulai menyelami dunia pemrograman — HTML, CSS, JavaScript. Banyak yang bingung, banyak yang minta tolong, tapi semua tetap semangat.",
-                side: "right",
-                emoji: "💻",
-              },
-              {
-                year: "2024",
-                semester: "Tahun Kedua",
-                title: "Mulai Tumbuh",
-                desc: "Projek pertama lahir, kerja kelompok yang penuh drama, dan momen-momen dimana kita sadar bahwa kita sudah jauh berkembang dari awal.",
-                side: "left",
-                emoji: "🚀",
-              },
-              {
-                year: "2025",
-                semester: "Tahun Ketiga",
-                title: "Praktik Kerja Lapangan",
-                desc: "PKL — pengalaman pertama terjun langsung ke dunia kerja. Magang di berbagai tempat, nervous di hari pertama, tapi pulang dengan ilmu dan cerita yang tidak ada di buku pelajaran.",
-                side: "right",
-                emoji: "🏢",
-              },
-              {
-                year: "2025",
-                semester: "Semester 5",
-                title: "Puncak Perjuangan",
-                desc: "Kembali ke kelas setelah magang dengan pengalaman baru. Ujian, proyek akhir, dan berbagai tantangan terakhir yang kita hadapi bersama sebelum garis finish.",
-                side: "left",
-                emoji: "🔥",
-              },
-              {
-                year: "2026",
-                semester: "Kelulusan",
-                title: "Selamat Jalan, Kawan",
-                desc: "Akhir dari satu babak, awal dari babak baru. Terima kasih sudah menjadi bagian dari cerita ini. Sampai jumpa di puncak kesuksesan masing-masing.",
-                side: "right",
-                emoji: "🎓",
-              },
+              { year: "2023", semester: "Tahun Pertama", title: "Awal Perjalanan", desc: "MPLS, perkenalan, dan hari-hari canggung yang menjadi awal dari persahabatan terbaik. Kita mulai mengenal satu sama lain dan belajar bersama untuk pertama kali.", side: "left", emoji: "🌱" },
+              { year: "2023", semester: "Semester 1", title: "Belajar Keras", desc: "Mulai menyelami dunia pemrograman — HTML, CSS, JavaScript. Banyak yang bingung, banyak yang minta tolong, tapi semua tetap semangat.", side: "right", emoji: "💻" },
+              { year: "2024", semester: "Tahun Kedua", title: "Mulai Tumbuh", desc: "Projek pertama lahir, kerja kelompok yang penuh drama, dan momen-momen dimana kita sadar bahwa kita sudah jauh berkembang dari awal.", side: "left", emoji: "🚀" },
+              { year: "2025", semester: "Tahun Ketiga", title: "Praktik Kerja Lapangan", desc: "PKL — pengalaman pertama terjun langsung ke dunia kerja. Magang di berbagai tempat, nervous di hari pertama, tapi pulang dengan ilmu dan cerita yang tidak ada di buku pelajaran.", side: "right", emoji: "🏢" },
+              { year: "2025", semester: "Semester 5", title: "Puncak Perjuangan", desc: "Kembali ke kelas setelah magang dengan pengalaman baru. Ujian, proyek akhir, dan berbagai tantangan terakhir yang kita hadapi bersama sebelum garis finish.", side: "left", emoji: "🔥" },
+              { year: "2026", semester: "Kelulusan", title: "Selamat Jalan, Kawan", desc: "Akhir dari satu babak, awal dari babak baru. Terima kasih sudah menjadi bagian dari cerita ini. Sampai jumpa di puncak kesuksesan masing-masing.", side: "right", emoji: "🎓" },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: item.side === "left" ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+              <motion.div key={i} initial={{ opacity: 0, x: item.side === "left" ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
                 className={`relative flex items-center mb-12 ${item.side === "left" ? "flex-row" : "flex-row-reverse"}`}
               >
-                <div
-                  className={`w-[calc(50%-28px)] p-5 rounded-2xl ${item.side === "left" ? "mr-auto" : "ml-auto"}`}
-                  style={{
-                    background: "linear-gradient(145deg, #161616, #111111)",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                  }}
+                <div className={`w-[calc(50%-28px)] p-5 rounded-2xl ${item.side === "left" ? "mr-auto" : "ml-auto"}`}
+                  style={{ background: "linear-gradient(145deg, #161616, #111111)", border: "1px solid rgba(255,255,255,0.05)" }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xl">{item.emoji}</span>
-                    <div>
-                      <div className="text-[9px] tracking-[0.35em] uppercase"
-                        style={{ color: "rgba(180,140,60,0.5)" }}>
-                        {item.year} · {item.semester}
-                      </div>
-                    </div>
+                    <div className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "rgba(180,140,60,0.5)" }}>{item.year} · {item.semester}</div>
                   </div>
-                  <h4
-                    className="font-semibold mb-2"
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "16px",
-                      color: "#f0e8d5",
-                    }}
-                  >
-                    {item.title}
-                  </h4>
-                  <p className="text-xs leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.38)", fontFamily: "Georgia, serif" }}>
-                    {item.desc}
-                  </p>
+                  <h4 className="font-semibold mb-2" style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", color: "#f0e8d5" }}>{item.title}</h4>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.38)", fontFamily: "Georgia, serif" }}>{item.desc}</p>
                 </div>
-
-                <div
-                  className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full z-10 flex-shrink-0"
-                  style={{
-                    background: "#c9a84c",
-                    boxShadow: "0 0 12px rgba(180,140,60,0.6)",
-                    border: "2px solid #0a0a0a",
-                  }}
-                />
+                <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full z-10 flex-shrink-0"
+                  style={{ background: "#c9a84c", boxShadow: "0 0 12px rgba(180,140,60,0.6)", border: "2px solid #0a0a0a" }} />
               </motion.div>
             ))}
 
             <div className="flex justify-center">
-              <div
-                className="w-5 h-5 rounded-full"
-                style={{
-                  background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
-                  boxShadow: "0 0 20px rgba(180,140,60,0.7)",
-                }}
-              />
+              <div className="w-5 h-5 rounded-full" style={{ background: "linear-gradient(135deg, #c9a84c, #e8c97a)", boxShadow: "0 0 20px rgba(180,140,60,0.7)" }} />
             </div>
           </div>
         </section>
 
         {/* FOOTER */}
-        <footer
-          className="py-16 text-center"
-          style={{ borderTop: "1px solid rgba(180,140,60,0.1)" }}
-        >
-          <div className="mb-3" style={{ color: "rgba(180,140,60,0.4)", letterSpacing: "0.5em", fontSize: "11px" }}>
-            ✦ ✦ ✦
-          </div>
-          <p
-            className="text-sm tracking-widest uppercase mb-2"
-            style={{ color: "rgba(180,140,60,0.5)", fontFamily: "Georgia, serif", fontStyle: "italic" }}
-          >
+        <footer className="py-16 text-center" style={{ borderTop: "1px solid rgba(180,140,60,0.1)" }}>
+          <div className="mb-3" style={{ color: "rgba(180,140,60,0.4)", letterSpacing: "0.5em", fontSize: "11px" }}>✦ ✦ ✦</div>
+          <p className="text-sm tracking-widest uppercase mb-2" style={{ color: "rgba(180,140,60,0.5)", fontFamily: "Georgia, serif", fontStyle: "italic" }}>
             Terima kasih atas semua kenangan indah
           </p>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em" }}>
-            © RPL 2026 Memories
-          </p>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em" }}>
-            by rzs
-          </p>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em" }}>© RPL 2026 Memories</p>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em" }}>by rzs</p>
         </footer>
       </main>
     </>
