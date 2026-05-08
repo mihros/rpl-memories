@@ -869,6 +869,7 @@ export default function Home() {
           </p>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em" }}>
             © RPL 2026 Memories
+            by rzs
           </p>
         </footer>
       </main>
