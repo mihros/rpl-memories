@@ -126,7 +126,6 @@ export default function Home() {
               transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
             }}
           >
-            {/* Tekstur garis */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -134,14 +133,12 @@ export default function Home() {
                   "repeating-linear-gradient(90deg, rgba(180,140,60,0.035) 0px, rgba(180,140,60,0.035) 1px, transparent 1px, transparent 48px)",
               }}
             />
-            {/* Cahaya tengah */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
                 background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(180,140,60,0.07) 0%, transparent 70%)",
               }}
             />
-            {/* Garis emas atas & bawah */}
             <div className="absolute top-0 left-0 right-0 h-[1px]"
               style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.4), transparent)" }} />
             <div className="absolute bottom-0 left-0 right-0 h-[1px]"
@@ -151,7 +148,6 @@ export default function Home() {
               className="relative z-10 text-center px-6 transition-opacity duration-400"
               style={{ opacity: contentFade ? 0 : 1 }}
             >
-              {/* Badge */}
               <div className="inline-flex items-center gap-3 mb-8">
                 <div className="h-px w-10" style={{ background: "rgba(180,140,60,0.4)" }} />
                 <p
@@ -216,7 +212,6 @@ export default function Home() {
               >
                 ✦ &nbsp; Buka Kenangan &nbsp; ✦
               </button>
-
             </div>
           </div>
         </div>
@@ -236,7 +231,6 @@ export default function Home() {
             <source src="/videos/school.mp4" type="video/mp4" />
           </video>
 
-          {/* Overlay gradient */}
           <div className="absolute inset-0"
             style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.1) 50%, rgba(8,8,8,0.8) 100%)" }} />
 
@@ -282,7 +276,7 @@ export default function Home() {
               style={{ background: "linear-gradient(90deg, transparent, rgba(180,140,60,0.6), transparent)" }}
             />
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
@@ -293,12 +287,10 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="text-base md:text-lg italic"
-                style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
               >
                 &ldquo;{randomQuote}&rdquo;
               </motion.p>
-            </motion.p>
+            </motion.div>
           </div>
 
           {/* Scroll indicator */}
@@ -328,8 +320,9 @@ export default function Home() {
           <span style={{ color: "rgba(180,140,60,0.4)", fontSize: "10px", letterSpacing: "0.4em" }}>✦</span>
           <div className="h-px flex-1 max-w-xs" style={{ background: "linear-gradient(90deg, rgba(180,140,60,0.2), transparent)" }} />
         </div>
+
         {/* TENTANG KELAS */}
-        <section className="py-28 px-4">
+        <section id="tentang" className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
               style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
@@ -351,8 +344,6 @@ export default function Home() {
           </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            {/* Kiri — deskripsi */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -398,7 +389,6 @@ export default function Home() {
                 setiap langkah kita tempuh bersama. Inilah cerita kita.
               </p>
 
-              {/* Stats */}
               <div className="grid grid-cols-3 gap-4 mt-10">
                 {[
                   { number: "19", label: "Siswa" },
@@ -432,7 +422,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Kanan — info cards */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -510,7 +499,7 @@ export default function Home() {
         </div>
 
         {/* STUDENTS */}
-        <section className="py-28 px-4">
+        <section id="siswa" className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
               style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
@@ -554,7 +543,6 @@ export default function Home() {
                         className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                     </PhotoView>
-                    {/* Overlay gradient on image */}
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }}
@@ -570,14 +558,14 @@ export default function Home() {
                     >
                       {student.name}
                     </h3>
-                    <p className="text-xs italic leading-relaxed"
-                      style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}>
-                      <p
-                        className="text-xs italic leading-relaxed"
-                        style={{ color: "rgba(180,140,60,0.55)", fontFamily: "Georgia, serif" }}
-                      >
-                        &ldquo;{student.quote}&rdquo;
-                      </p>
+                    <p
+                      className="text-xs italic leading-relaxed"
+                      style={{
+                        color: "rgba(180,140,60,0.55)",
+                        fontFamily: "Georgia, serif"
+                      }}
+                    >
+                      &ldquo;{student.quote}&rdquo;
                     </p>
                   </div>
                 </motion.div>
@@ -594,7 +582,7 @@ export default function Home() {
         </div>
 
         {/* GALLERY */}
-        <section className="py-28 px-4">
+        <section id="gallery" className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
               style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
@@ -617,7 +605,6 @@ export default function Home() {
 
           <PhotoProvider>
             <div className="relative flex items-center justify-center max-w-6xl mx-auto h-[600px]">
-
               <button
                 onClick={prev}
                 className="absolute left-0 md:left-4 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
@@ -686,7 +673,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Dot indicator */}
             <div className="flex justify-center gap-1.5 mt-10">
               {gallery.map((_, i) => (
                 <button
@@ -708,7 +694,7 @@ export default function Home() {
         </section>
 
         {/* TIMELINE */}
-        <section className="py-28 px-4">
+        <section id="timeline" className="py-28 px-4">
           <div className="text-center mb-16">
             <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
               style={{ color: "rgba(180,140,60,0.5)", fontStyle: "italic" }}>
@@ -730,8 +716,6 @@ export default function Home() {
           </div>
 
           <div className="max-w-3xl mx-auto relative">
-
-            {/* Garis tengah vertikal */}
             <div
               className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px"
               style={{ background: "linear-gradient(to bottom, transparent, rgba(180,140,60,0.25) 10%, rgba(180,140,60,0.25) 90%, transparent)" }}
@@ -795,7 +779,6 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className={`relative flex items-center mb-12 ${item.side === "left" ? "flex-row" : "flex-row-reverse"}`}
               >
-                {/* Card */}
                 <div
                   className={`w-[calc(50%-28px)] p-5 rounded-2xl ${item.side === "left" ? "mr-auto" : "ml-auto"}`}
                   style={{
@@ -828,7 +811,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Titik tengah */}
                 <div
                   className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full z-10 flex-shrink-0"
                   style={{
@@ -840,7 +822,6 @@ export default function Home() {
               </motion.div>
             ))}
 
-            {/* Titik akhir */}
             <div className="flex justify-center">
               <div
                 className="w-5 h-5 rounded-full"
