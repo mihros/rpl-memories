@@ -42,10 +42,10 @@ const gallery = Array.from({ length: 62 }, (_, i) => ({
 // sesuaikan dengan orientasi video aslimu
 const videoList = [
   { src: "/videos/001.mp4",  title: "Tiga Tahun Bersama",    tag: "Film Pendek", duration: "3:24", ratio: "16/9" },
-  { src: "/videos/0012.mp4",  title: "Hari Pertama",           tag: "MPLS",        duration: "1:12", ratio: "9/16" },
+  { src: "/videos/0016.mp4",  title: "Hari Pertama",           tag: "MPLS",        duration: "1:12", ratio: "9/16" },
   { src: "/videos/0013.mp4",  title: "Terjun ke Dunia Kerja", tag: "PKL",         duration: "2:05", ratio: "9/16" },
   { src: "/videos/0015.mp4",  title: "Saat Deadline",          tag: "Kelas",       duration: "0:45", ratio: "1/1"  },
-  { src: "/videos/0016.mp4",  title: "Pensi & Perpisahan",     tag: "Acara",       duration: "1:30", ratio: "16/9" },
+  { src: "/videos/0012.mp4",  title: "Pensi & Perpisahan",     tag: "Acara",       duration: "1:30", ratio: "16/9" },
   { src: "/videos/kicau.mp4",  title: "Hari Wisuda",            tag: "Kelulusan",   duration: "2:48", ratio: "9/16" },
   { src: "/videos/wer.mp4",  title: "Olahraga Bareng",        tag: "Kegiatan",    duration: "1:05", ratio: "1/1"  },
   { src: "/videos/lands.mp4",  title: "Study Tour",             tag: "Perjalanan",  duration: "2:20", ratio: "16/9" },
